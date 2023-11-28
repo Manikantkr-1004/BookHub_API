@@ -131,7 +131,7 @@ bookRouter.get("/get", authorMiddleware, async (req, res) => {
 });
 
 //To get the specific books collection or any recommendation from ChatGPT(ChatBot)
-bookRouter.get("/chatbot", async (req, res) => {
+bookRouter.post("/chatbot", async (req, res) => {
   try {
     const Response = await axios.post(
       process.env.GPTURL,
@@ -177,7 +177,7 @@ bookRouter.get("/chatbot", async (req, res) => {
 });
 
 //To get the Dynamic Books Content for User read from the ChatGPT
-bookRouter.get('/bookcontent',async(req,res)=>{
+bookRouter.post('/bookcontent',async(req,res)=>{
   try {
     const Response = await axios.post(
       process.env.GPTURL,
