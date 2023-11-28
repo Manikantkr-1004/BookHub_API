@@ -158,9 +158,9 @@ bookRouter.post("/chatbot", async (req, res) => {
     if (gptResponse === "all") {
       const randomNumber = Math.floor(Math.random() * (50 - 1)) + 1;
       const books = await bookModel.find().skip(randomNumber).limit(10);
-      res.send(books);
+      res.send({msg: books});
     } else if (gptResponse.length >= 30) {
-      res.send(gptResponse);
+      res.send({msg: gptResponse});
     } else {
       const books = await bookModel.find({
         $or: [
@@ -168,7 +168,7 @@ bookRouter.post("/chatbot", async (req, res) => {
           { author_name: { $regex: new RegExp(gptResponse, "i") } },
         ],
       }).limit(10);
-      res.send(books);
+      res.send({msg: books});
     }
   } catch (error) {
     res.status(500).send({ msg: "Internal Server Error!!" });
@@ -199,7 +199,7 @@ bookRouter.post('/bookcontent',async(req,res)=>{
     );
 
     let gptResponse = Response.data.choices[0].message.content;
-    res.send(gptResponse);
+    res.send({ msg: gptResponse });
 
   } catch (error) {
     res.status(500).send({ msg: "Internal Server Error!!" });
